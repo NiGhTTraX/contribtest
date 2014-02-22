@@ -23,16 +23,16 @@ def list_files(folder_path):
         yield os.path.join(folder_path, name)
 
 def read_file(file_path):
-    with open(file_path, 'rb') as f:
-        raw_metadata = ""
-        for line in f:
-            if line.strip() == '---':
-                break
-            raw_metadata += line
-        content = ""
-        for line in f:
-            content += line
-    return json.loads(raw_metadata), content
+    with open(file_path, "r") as f:
+        raw_metadata, content = f.read().split("---\n", 1)
+        try:
+            metadata = json.loads(raw_metadata)
+        except ValueError:
+            log.error("Metadata doesn't contain valid JSON")
+            log.error("Parsing %s", file_path)
+            raise
+
+    return metadata, content
 
 def write_output(path, html):
     # Prepare output: only allow max 2 consecutive new lines and strip any
