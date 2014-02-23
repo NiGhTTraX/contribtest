@@ -1,0 +1,13 @@
+*.log
+*.pot
+*.pyc
+
+# Vim Swap files
+*.swp
+*.swo
+
+# coverage.py
+.coverage
+
+output/
+
