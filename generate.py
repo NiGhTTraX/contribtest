@@ -11,7 +11,7 @@ import logging
 import json
 import re
 
-from jinja2 import Environment, FileSystemLoader, TemplateError, TemplateNotFound
+import jinja2
 
 
 log = logging.getLogger(__name__)
@@ -84,7 +84,7 @@ def generate_site(input_path, output_path):
         be generated. If it doesn't exist, it will be created.
     """
     log.info("Generating site from %r", input_path)
-    jinja_env = Environment(loader=FileSystemLoader(
+    jinja_env = jinja2.Environment(loader=jinja2.FileSystemLoader(
         os.path.join(input_path, "layout")))
 
     for file_path in list_files(input_path):
@@ -99,7 +99,7 @@ def generate_site(input_path, output_path):
 
         try:
             template = jinja_env.get_template(template_name)
-        except TemplateNotFound:
+        except jinja2.TemplateNotFound:
             log.error("Template not found")
             log.error("Parsing %s", template_name)
             continue
