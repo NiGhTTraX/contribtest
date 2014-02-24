@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 """
 Generate site from static pages, loosely inspired by Jekyll.
 
