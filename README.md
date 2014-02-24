@@ -2,7 +2,9 @@ contribtest
 ===========
 
 
-Generate site from static pages, loosely inspired by Jekyll
+Generate site from static pages, loosely inspired by Jekyll.
+
+Works on python 2.7+ and python 3.x.
 
 Usage
 -----
