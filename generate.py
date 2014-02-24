@@ -103,18 +103,16 @@ def generate_site(input_path, output_path):
             log.error("Template not found")
             log.error("Parsing %s", template_name)
             continue
+        except jinja2.TemplateSyntaxError:
+            log.error("There was an error in parsing template %s", template_name)
+            continue
 
         name = os.path.splitext(os.path.basename(file_path))[0] + ".html"
         path = os.path.join(output_path, name)
 
         data = dict(metadata, content=content)
 
-        try:
-            html = template.render(**data)
-        except TemplateError:
-            log.error("There was an error in parsing template %s", template_name)
-            log.error("Passed data was %s", str(data))
-            continue
+        html = template.render(**data)
 
         log.info("Writing %s with template %s", name, template_name)
         write_output(path, html)
