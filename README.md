@@ -10,3 +10,8 @@ Usage
 ./generate.py input output
 ```
 
+Testing
+-------
+
+To run the tests run ```run_tests.py``` from within the ```test``` folder.
+
