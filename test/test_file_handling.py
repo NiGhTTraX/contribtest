@@ -27,7 +27,7 @@ class TestFileHandling(unittest.TestCase):
 
     def test_list_files_lots_of_files(self):
         TEST_RANGE = 10
-        files = [tempfile.NamedTemporaryFile(dir=self.__tempdir, suffix=".rst") for i in xrange(TEST_RANGE)]
+        files = [tempfile.NamedTemporaryFile(dir=self.__tempdir, suffix=".rst") for i in range(TEST_RANGE)]
 
         self.assertListEqual(sorted(generate.list_files(self.__tempdir)),
                 sorted([f.name for f in files]))
@@ -37,7 +37,7 @@ class TestFileHandling(unittest.TestCase):
 
     def test_read_file(self):
         f = tempfile.NamedTemporaryFile(delete=False)
-        f.write("{}\n---\nana are mere")
+        f.write("{}\n---\nana are mere".encode())
         f.close()
 
         metadata, content = generate.read_file(f.name)
@@ -46,7 +46,7 @@ class TestFileHandling(unittest.TestCase):
 
     def test_read_file_multiple_separators(self):
         f = tempfile.NamedTemporaryFile(delete=False)
-        f.write("{}\n---\nana are mere\n---\nsi pere")
+        f.write("{}\n---\nana are mere\n---\nsi pere".encode())
         f.close()
 
         metadata, content = generate.read_file(f.name)
@@ -55,7 +55,7 @@ class TestFileHandling(unittest.TestCase):
 
     def test_read_file_valid_metadata(self):
         f = tempfile.NamedTemporaryFile(delete=False)
-        f.write('{"test": "cucu"}\n---\n')
+        f.write('{"test": "cucu"}\n---\n'.encode())
         f.close()
 
         metadata, _ = generate.read_file(f.name)
@@ -63,7 +63,7 @@ class TestFileHandling(unittest.TestCase):
 
     def test_read_file_invalid_metadata(self):
         f = tempfile.NamedTemporaryFile(delete=False)
-        f.write('{"cucu"}\n---\n')
+        f.write('{"cucu"}\n---\n'.encode())
         f.close()
 
         with self.assertRaises(ValueError):

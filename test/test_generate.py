@@ -29,7 +29,7 @@ class TestGenerate(unittest.TestCase):
     def test_generate_no_layout(self):
         f = tempfile.NamedTemporaryFile(dir=self.__tempdir, suffix=".rst",
                 delete=False)
-        f.write("{}\n---\n")
+        f.write("{}\n---\n".encode())
         f.close()
 
         generate.generate_site(self.__tempdir, self.__tempdir)
@@ -39,7 +39,7 @@ class TestGenerate(unittest.TestCase):
     def test_generate_missing_template(self):
         f = tempfile.NamedTemporaryFile(dir=self.__tempdir, suffix=".rst",
                 delete=False)
-        f.write('{"layout": "missing"}\n---\n')
+        f.write('{"layout": "missing"}\n---\n'.encode())
         f.close()
 
         generate.generate_site(self.__tempdir, self.__tempdir)
@@ -52,9 +52,9 @@ class TestGenerate(unittest.TestCase):
         p = os.path.join(self.__tempdir, "layout")
         os.mkdir(p)
         t = tempfile.NamedTemporaryFile(dir=p, suffix=".html", delete=False)
-        f.write('{"layout": "%s"}\n---\n' % t.name)
+        f.write(('{"layout": "%s"}\n---\n' % os.path.basename(t.name)).encode())
         f.close()
-        t.write("{ broken }}}}}")
+        t.write("{ broken }}}}}".encode())
         t.close()
 
         generate.generate_site(self.__tempdir, self.__tempdir)
