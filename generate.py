@@ -83,7 +83,7 @@ def generate_site(input_path, output_path):
         output_path: The path to the directory where the parsed templates will
         be generated. If it doesn't exist, it will be created.
     """
-    log.info("Generating site from %r", input_path)
+    log.info("Generating site from %s", input_path)
     jinja_env = jinja2.Environment(loader=jinja2.FileSystemLoader(
         os.path.join(input_path, "layout")))
 
