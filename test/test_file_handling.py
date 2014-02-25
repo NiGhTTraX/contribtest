@@ -35,6 +35,10 @@ class TestFileHandling(unittest.TestCase):
         for f in files:
             f.close()
 
+    def test_list_files_no_extension(self):
+        with tempfile.NamedTemporaryFile(dir=self.__tempdir) as f:
+            self.assertListEqual(list(generate.list_files(self.__tempdir)), [])
+
     def test_read_file(self):
         f = tempfile.NamedTemporaryFile(delete=False)
         f.write("{}\n---\nana are mere".encode())

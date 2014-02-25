@@ -28,9 +28,15 @@ def list_files(folder_path):
         All the .rst files in the given directory.
     """
     for name in os.listdir(folder_path):
-        ext = os.path.splitext(name)[1]
+        try:
+            ext = os.path.splitext(name)[1]
+        except IndexError:
+            # File doesn't have an extension.
+            continue
+
         if ext != ".rst":
             continue
+
         yield os.path.join(folder_path, name)
 
 def read_file(file_path):
