@@ -57,6 +57,14 @@ class TestFileHandling(unittest.TestCase):
         self.assertDictEqual(metadata, {})
         self.assertEqual(content, "ana are mere\n---\nsi pere")
 
+    def test_read_file_no_separator(self):
+        f = tempfile.NamedTemporaryFile(delete=False)
+        f.write("no seps".encode())
+        f.close()
+
+        with self.assertRaises(ValueError):
+            generate.read_file(f.name)
+
     def test_read_file_valid_metadata(self):
         f = tempfile.NamedTemporaryFile(delete=False)
         f.write('{"test": "cucu"}\n---\n'.encode())

@@ -114,6 +114,17 @@ class TestLogging(unittest.TestCase):
                  "Writing %s with template %s" % (expected_name,
                          os.path.basename(t.name))])
 
+    def test_read_file_no_separator(self):
+        f = tempfile.NamedTemporaryFile(delete=False)
+        f.write("no seps".encode())
+        f.close()
+
+        with self.assertRaises(ValueError):
+            generate.read_file(f.name)
+
+            self.assertListEqual(self.__log_handler.messages["error"],
+                ["File %s doesn't contain separator" % f.name])
+
 if __name__ == "__main__":
     unittest.main()
 

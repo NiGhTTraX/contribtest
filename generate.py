@@ -53,7 +53,12 @@ def read_file(file_path):
         ValueError: In case the metadata is not valid JSON.
     """
     with open(file_path, "r") as f:
-        raw_metadata, content = f.read().split("---\n", 1)
+        try:
+            raw_metadata, content = f.read().split("---\n", 1)
+        except ValueError:
+            log.error("File %s doesn't contain separator", file_path)
+            raise
+
         try:
             metadata = json.loads(raw_metadata)
         except ValueError:
