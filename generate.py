@@ -24,20 +24,11 @@ def list_files(folder_path):
     Args:
         folder_path: The path to the directory.
 
-    Yields:
+    Returns:
         All the .rst files in the given directory.
     """
-    for name in os.listdir(folder_path):
-        try:
-            ext = os.path.splitext(name)[1]
-        except IndexError:
-            # File doesn't have an extension.
-            continue
-
-        if ext != ".rst":
-            continue
-
-        yield os.path.join(folder_path, name)
+    return [os.path.join(folder_path, name) for name in os.listdir(folder_path) \
+        if os.path.splitext(name)[1] == ".rst"]
 
 def read_file(file_path):
     """Read a jinja2 template file.
